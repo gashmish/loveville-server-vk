@@ -1,0 +1,22 @@
+<html>
+  <head>
+    <title>Socket.io test</title>
+    <script type="text/javascript" src="node_modules/socket.io/node_modules/socket.io-client/dist/socket.io.js"></script> 
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.1/jquery.min.js"></script>
+  </head>
+
+  <body>
+  
+    <p>Connecting...</p>
+  
+    <script>
+      var socket = io.connect('http://loveville-server-vk.gashmish_1.cloud9ide.com/');
+      socket.on('news', function (data) {
+        console.log(data);
+          socket.emit('my other event', { my: 'data' });
+        });      
+      console.log('Client loaded');
+    </script>
+    
+  </body>
+</html>
