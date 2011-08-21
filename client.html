@@ -11,11 +11,33 @@
   
     <script>
       var socket = io.connect('http://loveville-server-vk.gashmish_1.cloud9ide.com/');
-      socket.on('news', function (data) {
-        console.log(data);
-          socket.emit('my other event', { my: 'data' });
-        });      
-      console.log('Client loaded');
+
+      socket.on('charts', function (data) {
+          console.log(data);
+      });
+
+      socket.on('user_stats', function (data) {
+          console.log(data);
+      });
+      
+      socket.on('room_init', function (data) {
+          console.log(data);
+      });
+      
+      socket.on('room_results', function (data) {
+          console.log(data);
+      });
+
+      socket.emit('user_stats', { my: 'data' });
+      socket.emit('charts', { my: 'data' });
+      
+      socket.emit('enter_room', { user_id: '1', user_sex: 'boy' });
+      socket.emit('enter_room', { user_id: '2', user_sex: 'boy' });
+      socket.emit('enter_room', { user_id: '3', user_sex: 'girl' });
+      socket.emit('enter_room', { user_id: '4', user_sex: 'girl' });
+      
+      socket.emit('enter_room', { user_id: '5', user_sex: 'girl' });
+      
     </script>
     
   </body>
