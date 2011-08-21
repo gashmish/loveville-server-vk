@@ -43,11 +43,12 @@ io.sockets.on('connection', function (client) {
       active_rooms.push(room);
       
       // notify clients
-      client.broadcast.to(room.id).emit('room_init', room.get_info());
+      socket.broadcast.to('justin bieber fans').emit('new fan');
+      io.sockets.in(room.id).emit('room_init', room.get_info());
       
       room.activate(function () {
         // notify clients
-        client.broadcast.to(room.id).emit('room_results', room.get_results());
+        io.sockets.in(room.id).emit('room_results', room.get_results());
         
         // remove room
         for (var i = 0; active_rooms[i] != room; i++) {
