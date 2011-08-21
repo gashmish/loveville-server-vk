@@ -43,7 +43,6 @@ io.sockets.on('connection', function (client) {
       active_rooms.push(room);
       
       // notify clients
-      socket.broadcast.to('justin bieber fans').emit('new fan');
       io.sockets.in(room.id).emit('room_init', room.get_info());
       
       room.activate(function () {
