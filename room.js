@@ -54,7 +54,10 @@ Room.prototype = {
     return {"result" : "test"};
   },
   
+  get_shepherds : function () {
+      return { "boys": this.boys, "girls": this.girls };
+  },
+
   select_changed : function (user_id, selected_user_id) {
-    
   }
 };
