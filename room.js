@@ -80,6 +80,10 @@ Room.prototype = {
     };
   },
   
+  get_shepherds : function () {
+      return { "boys": this.boys, "girls": this.girls };
+  },
+
   select_changed : function (user_id, selected_user_id) {
     selection[user_id] = selected_user_id; 
   }
