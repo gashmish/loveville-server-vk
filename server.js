@@ -1,9 +1,8 @@
 require("./room.js");
 require("./storage.js");
 
-/* Init connection listening */
 var http = require('http').createServer();
-var io = require('socket.io').listen(http);
+var io = require('socket.ioe').listen(http);
 http.listen(process.env.C9_PORT);
 
 var storage = new Storage();
@@ -47,13 +46,11 @@ io.sockets.on('connection', function (client) {
       
       room.activate(function () {
         // notify clients
+
         io.sockets.in(room.id).emit('room_results', room.get_results());
         
         // remove room
-        for (var i = 0; active_rooms[i] != room; i++) {
-          active_rooms.slice(i,1);
-          return;
-        }
+        active_rooms.splice(active_rooms.indexOf(room, 1)); 
       });
     };
     
@@ -76,7 +73,7 @@ io.sockets.on('connection', function (client) {
   client.on('select_changed', function (data) {
     rooms[client.room_id].select_changed(data.user_id, data.selected_user_id);
   });
-    
+
   client.on('disconnect', function () {
     if (client.room_id) {
         client.leave(client.room_id);

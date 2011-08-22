@@ -2,15 +2,16 @@
 Room = function (room_id) {
     this.id = room_id;
     this.MAX_SIDE_PLAYERS = 2;
-    this.PLAY_TIME = 60000;
+    this.ROUND_DURATION = 10000;
     this.boys = [];
     this.girls = [];
+    this.selection = {};
 };
 
 Room.prototype = { 
   
   constructor: Room,
-  
+ 
   is_full : function () {
     return this.boys.length == this.MAX_SIDE_PLAYERS &&
       this.girls.length == this.MAX_SIDE_PLAYERS;
@@ -41,20 +42,45 @@ Room.prototype = {
     }
     return false;
   },
-  
-  activate : function (result_function) {
-    setTimeout(result_function, this.PLAY_TIME);
+ 
+  activate : function (callback) {
+    
+    this.boys.forEach(function(boy) {
+      selection[boy] = this.girls[0];
+    });
+    
+    this.boys.forEach(function(boy) {
+      selection[boy] = this.boys[0];
+    });
+    
+    setTimeout(callback, this.ROUND_DURATION);
   },
   
   get_info : function () {
-    return {"info" : "test"};
+    return {
+      "boys" : this.boys,
+      "girs" : this.girls,
+      "round_duration" : this.ROUND_DURATION
+    };
   },
   
   get_results : function () {
-    return {"result" : "test"};
+    var pairs = [];
+    this.boys.forEach(function(boy) {
+      var girl = selection[boy];
+      if (selection[girl] == boy) {
+        pairs.push({
+          "boy" : boy,
+          "girl" : girl
+        });
+    }});
+
+    return {
+      "pairs" : pairs
+    };
   },
   
   select_changed : function (user_id, selected_user_id) {
-    
+    selection[user_id] = selected_user_id; 
   }
 };
