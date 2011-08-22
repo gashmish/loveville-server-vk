@@ -7,7 +7,7 @@ http.listen(process.env.C9_PORT);
 
 var storage = new Storage();
 var waiting_rooms = [];
-var active_rooms = [];
+var active_rooms = {};
 var next_room_id = 0;
 
 io.sockets.on('connection', function (client) {
@@ -43,19 +43,16 @@ io.sockets.on('connection', function (client) {
 
     var activate_room = function (room) {
       waiting_rooms.splice(waiting_rooms.indexOf(room), 1);
-      active_rooms.push(room);
+      active_rooms[room.id] = room;
 
       // notify clients
-//      io.sockets.in(room.id).emit('room_init', room.get_info());
       io.sockets.in(room.id).emit('room_init', room.get_info());
 
       room.activate(function () {
         // notify clients
-
         io.sockets.in(room.id).emit('room_results', room.get_results());
-
         // remove room
-        active_rooms.splice(active_rooms.indexOf(room, 1)); 
+        delete active_rooms[room.id];
       });
     };
 
@@ -76,7 +73,7 @@ io.sockets.on('connection', function (client) {
   });
 
   client.on('select_changed', function (data) {
-    active_rooms[client.room_id].select_changed(data.user_id, data.selected_user_id);
+    active_rooms[client.room_id].select_changed(data.user_id, data.selected_user_id);    
   });
 
   client.on('disconnect', function () {
