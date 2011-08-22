@@ -2,7 +2,7 @@
 Room = function (room_id) {
     this.id = room_id;
     this.MAX_SIDE_PLAYERS = 2;
-    this.ROUND_DURATION = 10000;
+    this.ROUND_DURATION = 5000;
     this.boys = [];
     this.girls = [];
     this.selection = {};
@@ -43,14 +43,17 @@ Room.prototype = {
     return false;
   },
  
-  activate : function (callback) {
+  activate : function (callback) {    
+    var selection = this.selection;
+    var first_boy = this.boys[0];
+    var first_girl = this.girls[0];
     
     this.boys.forEach(function(boy) {
-      selection[boy] = this.girls[0];
+      selection[boy] = first_girl;
     });
     
-    this.boys.forEach(function(boy) {
-      selection[boy] = this.boys[0];
+    this.girls.forEach(function(girl) {
+      selection[girl] = first_boy;
     });
     
     setTimeout(callback, this.ROUND_DURATION);
@@ -66,6 +69,7 @@ Room.prototype = {
   
   get_results : function () {
     var pairs = [];
+    var selection = this.selection;
     this.boys.forEach(function(boy) {
       var girl = selection[boy];
       if (selection[girl] == boy) {
@@ -74,7 +78,9 @@ Room.prototype = {
           "girl" : girl
         });
     }});
-
+    
+    console.log(selection);
+    
     return {
       "pairs" : pairs
     };
@@ -85,6 +91,6 @@ Room.prototype = {
   },
 
   select_changed : function (user_id, selected_user_id) {
-    selection[user_id] = selected_user_id; 
+    this.selection[user_id] = selected_user_id; 
   }
 };

@@ -46,6 +46,7 @@ io.sockets.on('connection', function (client) {
       active_rooms.push(room);
 
       // notify clients
+//      io.sockets.in(room.id).emit('room_init', room.get_info());
       io.sockets.in(room.id).emit('room_init', room.get_info());
 
       room.activate(function () {
@@ -75,7 +76,7 @@ io.sockets.on('connection', function (client) {
   });
 
   client.on('select_changed', function (data) {
-    rooms[client.room_id].select_changed(data.user_id, data.selected_user_id);
+    active_rooms[client.room_id].select_changed(data.user_id, data.selected_user_id);
   });
 
   client.on('disconnect', function () {

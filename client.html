@@ -1,7 +1,7 @@
 <html>
   <head>
     <title>Socket.io test</title>
-    <script type="text/javascript" src="node_modules/socket.io/node_modules/socket.io-client/dist/socket.io.js"></script> 
+    <script type="text/javascript" src="node_modules/socket.io-client/dist/socket.io.js"></script> 
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.1/jquery.min.js"></script>
   </head>
 
@@ -28,15 +28,16 @@
           console.log(data);
       });
 
-      socket.emit('user_stats', { my: 'data' });
-      socket.emit('charts', { my: 'data' });
+      //socket.emit('user_stats', { my: 'data' });
+      //socket.emit('charts', { my: 'data' });
       
       socket.emit('enter_room', { user_id: '1', user_sex: 'boy' });
       socket.emit('enter_room', { user_id: '2', user_sex: 'boy' });
       socket.emit('enter_room', { user_id: '3', user_sex: 'girl' });
-      socket.emit('enter_room', { user_id: '4', user_sex: 'girl' });
+      socket.emit('enter_room', { user_id: '4', user_sex: 'girl' });      
+      //socket.emit('enter_room', { user_id: '5', user_sex: 'girl' });
+      socket.emit('select_changed', { user_id: '1', selected_user_id: '4' });
       
-      socket.emit('enter_room', { user_id: '5', user_sex: 'girl' });
       
     </script>
     
