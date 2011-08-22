@@ -2,7 +2,7 @@ require("./room.js");
 require("./storage.js");
 
 var http = require('http').createServer();
-var io = require('socket.ioe').listen(http);
+var io = require('socket.io').listen(http);
 http.listen(process.env.C9_PORT);
 
 var storage = new Storage();
